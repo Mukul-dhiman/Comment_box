@@ -1,5 +1,6 @@
 from flask import Flask,render_template,session, request ,redirect, url_for
 from flask_mysqldb import MySQL
+import MySQLdb
 
 
 # all important functions are in functions.py
@@ -44,16 +45,18 @@ def EnterName():
 def CommentBox():
     if(request.method == 'POST'):
         form = request.form
-        text = form['text']
+        text = form['comment']
         name = 'UnKnown'
         if 'name' in session:
             name = session['name']
         try:
-            cur = mysql.connection.cursor()
+            cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             parent_id = "super"
-            current_id = Genrate_random_id(16);
+            current_id = Generate_random_id(16)
+            current_time = current_time_string()
+            print(current_id,parent_id,  name, text)
             cur.execute("insert into comment value(%s,%s,%s,%s,%s)",
-                    (current_id,parent_id,  name, text, ))
+                    (current_id,parent_id,  name, text, current_time))
             mysql.connection.commit()
             cur.close()
         
@@ -64,8 +67,11 @@ def CommentBox():
 
 @app.route('/CommentSection/<comment_id>')
 def CommentSection(comment_id):
-    name = session['name']
-    return render_template('CommentSection.html',Name=name)
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("select * from comment  where parent_id  = %s", [comment_id])
+    comment_data = cursor.fetchall()
+    cursor.close()
+    return render_template('CommentSection.html',comment_data = comment_data)
 
 # setting a secret key for the session
 app.secret_key = 'os.urandom(16)'
