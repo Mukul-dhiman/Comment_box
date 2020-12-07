@@ -5,5 +5,6 @@ CREATE TABLE comment(
   	parent_id VARCHAR(64),
   	author VARCHAR(128),
   	comments_text TEXT,
+    measured_on timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   	PRIMARY KEY(comment_id)
 );

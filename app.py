@@ -1,6 +1,10 @@
 from flask import Flask,render_template,session, request ,redirect, url_for
 from flask_mysqldb import MySQL
 
+
+# all important functions are in functions.py
+from functions import *
+
 # constructiong Flask object
 app=Flask(__name__)
 
@@ -40,11 +44,19 @@ def EnterName():
 def CommentBox():
     if(request.method == 'POST'):
         form = request.form
-        name = form['text']
+        text = form['text']
+        name = 'UnKnown'
+        if 'name' in session:
+            name = session['name']
         try:
-            if(name!=''):
-                print(name)
-                return redirect(url_for('CommentBox'))
+            cur = mysql.connection.cursor()
+            parent_id = "super"
+            current_id = Genrate_random_id(16);
+            cur.execute("insert into comment value(%s,%s,%s,%s,%s)",
+                    (current_id,parent_id,  name, text, ))
+            mysql.connection.commit()
+            cur.close()
+        
         except Exception as e:
             return str(e)
     name = session['name']
