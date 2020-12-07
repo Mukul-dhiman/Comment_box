@@ -21,13 +21,13 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        Hello {{ Name }}
+    </div>
+
+    <!-- to LOG OUT the current session -->
+    <a class="navbar-brand" href="/logout">logout</a>
 
 
-    <!-- LOG OUT BUTTON -->
-    <button type="button" id="LogoutButton" class="btn btn-info" href="/">
-        <span>
-            LOG OUT
-        </span>
-    </button>
 </nav>
 {% endblock %}

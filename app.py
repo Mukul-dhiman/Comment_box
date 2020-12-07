@@ -1,4 +1,4 @@
-from flask import Flask,render_template,session, request ,redirect
+from flask import Flask,render_template,session, request ,redirect, url_for
 from flask_mysqldb import MySQL
 
 # constructiong Flask object
@@ -25,7 +25,8 @@ def NamePage():
         try:
             session['name'] = name
             if(name!=''):
-                return redirect(url_for('Commentbox'))
+                print(name)
+                return redirect(url_for('CommentBox'))
         except Exception as e:
             return str(e)
     return render_template('EnterName.html')
@@ -36,9 +37,10 @@ def logout():
         session.pop('name', None)
     return render_template('EnterName.html')
 
-@app.route('/CommentBox')
+@app.route('/CommentBox',methods=['GET'])
 def CommentBox():
-    return render_template('CommentBox.html')
+    name = session['name']
+    return render_template('CommentBox.html',Name=name)
 
 
 # setting a secret key for the session
