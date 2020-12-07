@@ -1,9 +1,6 @@
-.comments-tile{
-    border-radius: 10px;
+.comments-tile {
     display: flex;
-    justify-content: space-between;
-    max-width: 400px;
-    margin: 0 auto;
+    margin: 200 auto;
     background: #A0C5E8;
     padding: 10px 0;
 }

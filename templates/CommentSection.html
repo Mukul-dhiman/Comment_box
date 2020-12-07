@@ -5,10 +5,22 @@
 {% endblock %}
 
 {%  block body %}
-<div class="shadow-lg border border-dark bg-white">
-    {{ data in comment_data }}
-    <div class="shadow-lg border border-dark bg-white comments-tile">
 
+<br><br>
+<div class="shadow-lg border border-dark bg-white">
+
+    {% for data in comment_data %}
+    <br>
+    <div class="rounded-pill shadow-lg border border-dark bg-white  comments-tile">
+        <div class=" justify-content-start d-inline-block">
+            {{ data.author }}
+            :
+            <div class="d-inline-block justify-content-around">
+                {{ data.comments_text }}
+            </div>
+        </div>
     </div>
+    {% endfor %}
+    <br>
 </div>
 {% endblock %}
