@@ -11,21 +11,35 @@
 
     {% for data in comment_data %}
     <br>
-    <div class="rounded shadow-lg border border-dark bg-white  comments-tile">
-        <div class=" justify-content-start " style="margin-left: 50px; display: block;">
-            {{ data.author }}
-            :
-            <div class="d-inline-block justify-content-around">
+    <div class="rounded shadow-lg border border-dark bg-white d-flex flex-column bd-highlight mb-3 comments-tile">
+        <div class="d-flew p-2 justify-content-around" >
+            <span style="display: inline-block;">
+                {{ data.author }}
+                :
+            </spam>
+            <span style="display: inline-block;">
                 {{ data.comments_text }}
-            </div>
+            </span>
+            
         </div>
-        <div style="display: block;">
-            <button type="button" class="collapsible inline-block" >Open Collapsible</button>
+        <div class="d-block p-2 " style="width:100%;">
+            <button type="button" class="collapsible" >Open Collapsible</button>
             <div class="content" >
-                hello
                 <iframe src="/CommentSection/{{ data.current_id }}"  style="margin: 20px; width:100%;" title="Iframe Example"></iframe>     
+                <div>
+                    <form method='POST' action='/CommentSection/{{ data.current_id }}'>
+                        <textarea class="form-control" type='text' name='comment' placeholder="Be the first one to reply" aria-label="write a new comment here"></textarea>
+                        <a class='btn bg-drak'><input type='submit' value="submit"></a>
+                    </form>
+                </div>
             </div>
+            
         </div>
+        <span class="d-flex flex-row-reverse bd-highlight" style="margin-right: 30px;">
+            <small>
+                {{ data.comment_on }}
+            </small>
+        </span>
     </div>
     {% endfor %}
     <br>
