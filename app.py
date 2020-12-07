@@ -87,7 +87,13 @@ def CommentReply(comment_id):
         cursor.execute("insert into comment value(%s,%s,%s,%s,%s)",(reply_current_id,parent_id,  name, text, current_time))
         mysql.connection.commit()
         cursor.close()
-    return CommentSection("super")
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("select parent_id from comment  where comment_id  = %s", [comment_id])
+    grand_parent = cursor.fetchall()
+    cursor.close()
+    print("*******************")
+    print(grand_parent[0])
+    return CommentSection(grand_parent[0]['parent_id'])
 
 
 
