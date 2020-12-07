@@ -25,7 +25,6 @@ def NamePage():
         try:
             session['name'] = name
             if(name!=''):
-                print(name)
                 return redirect(url_for('CommentBox'))
         except Exception as e:
             return str(e)
@@ -37,13 +36,22 @@ def EnterName():
         session.pop('name', None)
     return render_template('EnterName.html')
 
-@app.route('/CommentBox',methods=['GET'])
+@app.route('/CommentBox',methods=['GET','POST'])
 def CommentBox():
+    if(request.method == 'POST'):
+        form = request.form
+        name = form['text']
+        try:
+            if(name!=''):
+                print(name)
+                return redirect(url_for('CommentBox'))
+        except Exception as e:
+            return str(e)
     name = session['name']
     return render_template('CommentBox.html',Name=name)
 
-@app.route('/CommentSection')
-def CommentSection():
+@app.route('/CommentSection/<comment_id>')
+def CommentSection(comment_id):
     name = session['name']
     return render_template('CommentSection.html',Name=name)
 
