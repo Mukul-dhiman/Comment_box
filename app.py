@@ -1,4 +1,4 @@
-from flask import Flask,render_template
+from flask import Flask,render_template,session
 from flask_mysqldb import MySQL
 # import MySQLdb
 
@@ -16,7 +16,17 @@ mysql = MySQL(app)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    if(request.method == 'POST'):
+        form = request.form
+        name = form['name']
+        try:
+                session['name'] = name 
+        except Exception as e:
+            return str(e)
+    return render_template('EnterName.html')
 
+
+
+app.secret_key = 'os.urandom(16)'
 if __name__=='__main__':
     app.run(debug=True)

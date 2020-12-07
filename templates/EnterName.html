@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+
+
+{%  block head %}
+<title> ENTER YOUR NAME </title>
+{% endblock %}
+
+{%  block body %}
+<form method='POST' action='/'>
+    ENTER YOUR NAME <input type='text' name='name'>
+    <br>
+    <a class='btn bg-drak'><input type='submit' value="submit"></a>
+</form>
+{% endblock %}
