@@ -42,7 +42,7 @@ def CommentBox():
     name = session['name']
     return render_template('CommentBox.html',Name=name)
 
-@app.route('/CommentSection',methods=['GET'])
+@app.route('/CommentSection')
 def CommentSection():
     name = session['name']
     return render_template('CommentSection.html',Name=name)
