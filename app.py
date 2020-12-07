@@ -17,9 +17,9 @@ mysql = MySQL(app)
 
 @app.route('/',methods=['POST'])
 def NamePage():
-    if 'name' in session:
-        session.pop('name', None)
     if(request.method == 'POST'):
+        if 'name' in session:
+            session.pop('name', None)
         form = request.form
         name = form['name']
         try:
@@ -31,8 +31,8 @@ def NamePage():
             return str(e)
     return render_template('EnterName.html')
 
-@app.route('/logout')
-def logout():
+@app.route('/EnterName')
+def EnterName():
     if 'name' in session:
         session.pop('name', None)
     return render_template('EnterName.html')
