@@ -25,9 +25,9 @@
         <div class="d-block p-2 " style="width:100%;">
             <button type="button" class="collapsible" >Open Collapsible</button>
             <div class="content" >
-                <iframe src="/CommentSection/{{ data.current_id }}"  style="margin: 20px; width:100%;" title="Iframe Example"></iframe>     
+                <iframe src="/CommentSection/{{ data.comment_id }}"  style="margin: 20px; width:100%;" title="Iframe Example"></iframe>     
                 <div>
-                    <form method='POST' action='/CommentSection/{{ data.current_id }}'>
+                    <form method='POST' action='/CommentReply/{{ data.comment_id }}'>
                         <textarea class="form-control" type='text' name='comment' placeholder="Be the first one to reply" aria-label="write a new comment here"></textarea>
                         <a class='btn bg-drak'><input type='submit' value="submit"></a>
                     </form>
@@ -42,6 +42,5 @@
         </span>
     </div>
     {% endfor %}
-    <br>
 </div>
 {% endblock %}

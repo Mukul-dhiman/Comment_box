@@ -50,15 +50,14 @@ def CommentBox():
         if 'name' in session:
             name = session['name']
         try:
-            cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             parent_id = "super"
             current_id = Generate_random_id(16)
             current_time = current_time_string()
             print(current_id,parent_id,  name, text)
-            cur.execute("insert into comment value(%s,%s,%s,%s,%s)",
-                    (current_id,parent_id,  name, text, current_time))
+            cursor.execute("insert into comment value(%s,%s,%s,%s,%s)",(current_id,parent_id,  name, text, current_time))
             mysql.connection.commit()
-            cur.close()
+            cursor.close()
         
         except Exception as e:
             return str(e)
@@ -72,6 +71,25 @@ def CommentSection(comment_id):
     comment_data = cursor.fetchall()
     cursor.close()
     return render_template('CommentSection.html',comment_data = comment_data)
+
+@app.route('/CommentReply/<comment_id>', methods=['POST'])
+def CommentReply(comment_id):
+    if(request.method=='POST'):
+        form = request.form
+        text = form['comment']
+        name = 'UnKnown'
+        if 'name' in session:
+            name = session['name']
+        reply_current_id = Generate_random_id(16)
+        parent_id = comment_id
+        current_time = current_time_string()
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute("insert into comment value(%s,%s,%s,%s,%s)",(reply_current_id,parent_id,  name, text, current_time))
+        mysql.connection.commit()
+        cursor.close()
+    return CommentSection("super")
+
+
 
 # setting a secret key for the session
 app.secret_key = 'os.urandom(16)'
