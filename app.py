@@ -42,6 +42,10 @@ def CommentBox():
     name = session['name']
     return render_template('CommentBox.html',Name=name)
 
+@app.route('/CommentSection',methods=['GET'])
+def CommentSection():
+    name = session['name']
+    return render_template('CommentSection.html',Name=name)
 
 # setting a secret key for the session
 app.secret_key = 'os.urandom(16)'
