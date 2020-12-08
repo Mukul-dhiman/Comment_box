@@ -2,7 +2,7 @@ from flask import Flask,render_template,session, request ,redirect, url_for
 from flask_mysqldb import MySQL
 import MySQLdb
 
-
+import os
 
 # all important functions are in functions.py
 from packages.functions import *
@@ -50,6 +50,7 @@ def CommentBox():
     if(request.method == 'POST'):
         form = request.form
         text = form['comment']
+        file = request.files['fileToUpload']
         name = 'UnKnown'
         
         if 'name' in session:
@@ -58,6 +59,11 @@ def CommentBox():
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             parent_id = "super"
             current_id = Generate_random_id(16)
+
+            #store image in static/images
+            store_image(file,current_id)
+
+        
             current_time = current_time_string()
             cursor.execute("insert into comment value(%s,%s,%s,%s,%s)",(current_id,parent_id,  name, text, current_time))
             mysql.connection.commit()
@@ -74,6 +80,11 @@ def CommentSection(comment_id):
     cursor.execute("select * from comment  where parent_id  = %s", [comment_id])
     comment_data = cursor.fetchall()
     cursor.close()
+    
+    # for image 
+    path = os.getcwd() + "/static/images/" + str(id) + os.path.splitext(file.filename)[1]
+    if os.path.isfile(path):
+        os.remove(path)
     return render_template('CommentSection.html',comment_data = comment_data)
 
 @app.route('/search',methods=['POST'])

@@ -19,10 +19,13 @@
             <span style="display: inline-block;">
                 {{ data.comments_text }}
             </span>
+            <span>
+                <img src="../static/images/{{ data.comment_id }}">
+            </span>
             
         </div>
         <div class="d-block p-2 " style="width:100%;">
-            <button type="button" class="collapsible" >Open Collapsible</button>
+            <button type="button" class="collapsible" >Replies</button>
             <div class="content" >
                 <iframe src="/CommentSection/{{ data.comment_id }}"  style="min-height: 350px; margin: 20px; width:100%;" title="Iframe Example"></iframe>     
                 <div>

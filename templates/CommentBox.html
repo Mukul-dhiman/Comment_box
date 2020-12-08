@@ -35,8 +35,9 @@
 
 <!-- footer  -->
 <footer id="footer" class="midnight-blue fixed-bottom">
-    <form method='POST' action='/CommentBox'>
+    <form method='POST' action='/CommentBox' enctype="multipart/form-data">
         <textarea class="form-control" type='text' name='comment' placeholder="write a new comment here" aria-label="write a new comment here"></textarea>
+        <input type="file" name='fileToUpload' id="fileToUpload">
         <a class='btn bg-drak'><input type='submit' value="submit"></a>
     </form>
 </footer>
