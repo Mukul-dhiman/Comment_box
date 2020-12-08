@@ -10,9 +10,8 @@
 <div class="shadow-lg border border-dark bg-white">
 
     {% for data in comment_data %}
-    <br>
     <div class="rounded shadow-lg border border-dark bg-white d-flex flex-column bd-highlight mb-3 comments-tile">
-        <div class="d-flew p-2 justify-content-around" >
+        <div class="d-flew justify-content-around" style="margin-left: 10px;" >
             <span style="display: inline-block;">
                 {{ data.author }}
                 :
@@ -28,7 +27,7 @@
                 <iframe src="/CommentSection/{{ data.comment_id }}"  style="min-height: 350px; margin: 20px; width:100%;" title="Iframe Example"></iframe>     
                 <div>
                     <form method='POST' action='/CommentReply/{{ data.comment_id }}'>
-                        <textarea class="form-control" type='text' name='comment' placeholder="Be the first one to reply" aria-label="write a new comment here"></textarea>
+                        <textarea class="form-control" type='text' name='comment' placeholder="Give a reply to this comment" aria-label="write a new comment here"></textarea>
                         <a class='btn bg-drak'><input type='submit' value="submit"></a>
                     </form>
                 </div>

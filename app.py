@@ -91,8 +91,6 @@ def CommentReply(comment_id):
     cursor.execute("select parent_id from comment  where comment_id  = %s", [comment_id])
     grand_parent = cursor.fetchall()
     cursor.close()
-    print("*******************")
-    print(grand_parent[0])
     return CommentSection(grand_parent[0]['parent_id'])
 
 
