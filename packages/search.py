@@ -1,6 +1,5 @@
 from .spell_correct import similar
 
-
 def Result(cursor,query):
     query = query.strip().split(" ")
     result = ()

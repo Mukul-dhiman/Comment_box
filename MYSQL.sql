@@ -8,3 +8,8 @@ CREATE TABLE comment(
     comment_on VARCHAR(16),
   	PRIMARY KEY(comment_id)
 );
+
+CREATE TABLE comment(
+	comment_id VARCHAR(64),
+  	picture_path VARCHAR(64) DEFAULT CASE "none"
+);

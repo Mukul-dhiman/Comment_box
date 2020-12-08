@@ -3,11 +3,12 @@ from flask_mysqldb import MySQL
 import MySQLdb
 
 
+
 # all important functions are in functions.py
-from Functions.functions import *
+from packages.functions import *
 
 # for effective search
-from Functions.search import Result
+from packages.search import Result
 
 # constructiong Flask object
 app=Flask(__name__)
@@ -50,6 +51,7 @@ def CommentBox():
         form = request.form
         text = form['comment']
         name = 'UnKnown'
+        
         if 'name' in session:
             name = session['name']
         try:
@@ -57,7 +59,6 @@ def CommentBox():
             parent_id = "super"
             current_id = Generate_random_id(16)
             current_time = current_time_string()
-            print(current_id,parent_id,  name, text)
             cursor.execute("insert into comment value(%s,%s,%s,%s,%s)",(current_id,parent_id,  name, text, current_time))
             mysql.connection.commit()
             cursor.close()
