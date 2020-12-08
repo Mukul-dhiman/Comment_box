@@ -16,7 +16,7 @@ def current_time_string():
 def store_image(file,id):
     # os.getcwd() for local path
     # os.path.splitext(file.filename)[1] for extention 
-    path = os.getcwd() + "/static/images/" + str(id) + os.path.splitext(file.filename)[1]
+    path = os.getcwd() + "/static/images/" + str(id) + ".jpg"
     if os.path.isfile(path):
         os.remove(path)
     file.save(path)

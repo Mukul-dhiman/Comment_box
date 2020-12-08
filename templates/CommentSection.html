@@ -19,12 +19,9 @@
             <span style="display: inline-block;">
                 {{ data.comments_text }}
             </span>
-            {% set IconPng = url_for('static', filename='/images/'+data.comment_id+'.jpg') %}
-            {% if IconPng %}
             <span>
-                <img src="{{ url_for('static', filename='/images/'+data.comment_id+'.jpg') }}" alt="">
+                <img src="{{ url_for('static', filename='images/'+data.comment_id+'.jpg') }}" alt="">
             </span>
-            {% endif %}
         </div>
         <div class="d-block p-2 " style="width:100%;">
             <button type="button" class="collapsible" >Replies</button>
