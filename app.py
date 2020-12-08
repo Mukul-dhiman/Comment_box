@@ -4,10 +4,10 @@ import MySQLdb
 
 
 # all important functions are in functions.py
-from functions import *
+from Functions.functions import *
 
 # for effective search
-from search import *
+from Functions.search import Result
 
 # constructiong Flask object
 app=Flask(__name__)
