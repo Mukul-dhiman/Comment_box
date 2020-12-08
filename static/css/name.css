@@ -97,8 +97,8 @@ body {
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
 }
 .float:hover, .float:focus, .float:active {
-  -webkit-transform: translateY(-3px);
-  transform: translateY(-3px);
+  -webkit-transform: translateY(-6px);
+  transform: translateY(-6px);
 }
 /* Large Devices, Wide Screens */
 @media only screen and (max-width: 1200px) {
