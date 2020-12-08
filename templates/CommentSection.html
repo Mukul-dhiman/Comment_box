@@ -31,8 +31,9 @@
             <div class="content" >
                 <iframe src="/CommentSection/{{ data.comment_id }}"  style="min-height: 350px; margin: 20px; width:100%;" title="Iframe Example"></iframe>     
                 <div>
-                    <form method='POST' action='/CommentReply/{{ data.comment_id }}'>
+                    <form method='POST' action='/CommentReply/{{ data.comment_id }}' enctype="multipart/form-data">
                         <textarea class="form-control" type='text' name='comment' placeholder="Give a reply to this comment" aria-label="write a new comment here"></textarea>
+                        <input type="file" name='fileToUpload' id="fileToUpload">
                         <a class='btn bg-drak'><input type='submit' value="submit"></a>
                     </form>
                 </div>

@@ -99,10 +99,16 @@ def CommentReply(comment_id):
     if(request.method=='POST'):
         form = request.form
         text = form['comment']
+        file = request.files['fileToUpload']
+
         name = 'UnKnown'
         if 'name' in session:
             name = session['name']
         reply_current_id = Generate_random_id(16)
+
+        #store image in static/images
+        store_image(file,reply_current_id)
+
         parent_id = comment_id
         current_time = current_time_string()
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
