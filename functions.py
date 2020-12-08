@@ -9,5 +9,4 @@ def Generate_random_id(N):
 
 
 def current_time_string():
-    now = datetime.now()
-    return now.strftime("%H:%M:%S")
+    return datetime.now().strftime("%H:%M:%S")

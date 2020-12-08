@@ -6,6 +6,9 @@ import MySQLdb
 # all important functions are in functions.py
 from functions import *
 
+# for effective search
+from search import *
+
 # constructiong Flask object
 app=Flask(__name__)
 
@@ -71,6 +74,18 @@ def CommentSection(comment_id):
     comment_data = cursor.fetchall()
     cursor.close()
     return render_template('CommentSection.html',comment_data = comment_data)
+
+@app.route('/search',methods=['POST'])
+def search():
+    if(request.method=='POST'):
+        form = request.form
+        query=form['search']
+        if query=='':
+            return render_template('CommentBox.html')
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        result = Result(cursor,query)
+        cursor.close()
+    return render_template('search_results.html',result = result)
 
 @app.route('/CommentReply/<comment_id>', methods=['POST'])
 def CommentReply(comment_id):
