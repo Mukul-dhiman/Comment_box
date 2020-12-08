@@ -36,3 +36,22 @@
     width: auto;
     height: auto;
 }
+
+.green_button{
+  margin-top: 20px;
+  background: #27AE60;
+  border: none;
+  font-size: 1.6em;
+  font-weight: 300;
+  padding: 5px 0;
+  width: 200px;
+  border-radius: 3px;
+  color: #b3eecc;
+  border-bottom: 4px solid #1e8449;
+}
+
+.green_button:hover{
+  background: tint(#27AE60, 4%);
+  -webkit-animation: hop 1s;
+  animation: hop 1s;
+}
