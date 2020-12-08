@@ -1,0 +1,74 @@
+{% extends 'index.html' %}
+
+
+{%  block head %}
+<title> COMMENT BOX </title>
+{% endblock %}
+
+{%  block body %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+
+    <!-- LOGO -->
+    <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="location.href='CommentBox'">
+        <span>Comment Box</span>
+    </button>
+    
+
+    <!-- search Bar -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <form class="form-inline my-2 my-lg-0" method='POST' action="/search">
+            <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        Hello {{ Name }}
+    </div>
+
+    <!-- to LOG OUT the current session -->
+    <a class="navbar-brand" href="/EnterName">logout</a>
+</nav>
+
+
+{% for data in result %}
+    <div class="rounded shadow-lg border border-dark bg-white d-flex flex-column bd-highlight mb-3 comments-tile">
+        <div class="d-flew justify-content-around" style="margin-left: 10px;" >
+            <span style="display: inline-block;">
+                {{ data.author }}
+                :
+            </spam>
+            <span style="display: inline-block;">
+                {{ data.comments_text }}
+            </span>
+            
+        </div>
+        <div class="d-block p-2 " style="width:100%;">
+            <button type="button" class="collapsible" >Open Collapsible</button>
+            <div class="content" >
+                <iframe src="/CommentSection/{{ data.comment_id }}"  style="min-height: 350px; margin: 20px; width:100%;" title="Iframe Example"></iframe>     
+                <div>
+                    <form method='POST' action='/CommentReply/{{ data.comment_id }}'>
+                        <textarea class="form-control" type='text' name='comment' placeholder="Give a reply to this comment" aria-label="write a new comment here"></textarea>
+                        <a class='btn bg-drak'><input type='submit' value="submit"></a>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        <span class="d-flex flex-row-reverse bd-highlight" style="margin-right: 30px;">
+            <small>
+                {{ data.comment_on }}
+            </small>
+        </span>
+    </div>
+    {% endfor %}
+
+<!-- footer  -->
+<footer id="footer" class="midnight-blue fixed-bottom">
+    <form method='POST' action='/CommentBox'>
+        <textarea class="form-control" type='text' name='comment' placeholder="write a new comment here" aria-label="write a new comment here"></textarea>
+        <a class='btn bg-drak'><input type='submit' value="submit"></a>
+    </form>
+</footer>
+
+{% endblock %}
