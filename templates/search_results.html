@@ -40,7 +40,7 @@
             
         </div>
         <div class="d-block p-2 " style="width:100%;">
-            <button type="button" class="collapsible" >Open Collapsible</button>
+            <button type="button" class="collapsible green_bar float" >Open Collapsible</button>
             <div class="content" >
                 <iframe src="/CommentSection/{{ data.comment_id }}"  style="min-height: 350px; margin: 20px; width:100%;" title="Iframe Example"></iframe>     
                 <div>
@@ -61,10 +61,11 @@
     {% endfor %}
 
 <!-- footer  -->
-<footer id="footer" class="midnight-blue fixed-bottom">
-    <form method='POST' action='/CommentBox'>
+<footer id="footer" class="midnight-blue fixed-bottom" style="background-color: white;">
+    <form method='POST' action='/CommentBox' enctype="multipart/form-data">
         <textarea class="form-control" type='text' name='comment' placeholder="write a new comment here" aria-label="write a new comment here"></textarea>
-        <a class='btn bg-drak'><input type='submit' value="submit"></a>
+        <input class=" float" type="file" name='fileToUpload' id="fileToUpload">
+        <a class='float'><input type='submit' value="submit"></a>
     </form>
 </footer>
 
