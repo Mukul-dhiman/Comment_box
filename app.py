@@ -80,11 +80,6 @@ def CommentSection(comment_id):
     cursor.execute("select * from comment  where parent_id  = %s", [comment_id])
     comment_data = cursor.fetchall()
     cursor.close()
-    
-    # for image 
-    path = os.getcwd() + "/static/images/" + str(id) + os.path.splitext(file.filename)[1]
-    if os.path.isfile(path):
-        os.remove(path)
     return render_template('CommentSection.html',comment_data = comment_data)
 
 @app.route('/search',methods=['POST'])
