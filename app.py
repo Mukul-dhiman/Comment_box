@@ -77,6 +77,8 @@ def CommentBox():
 @app.route('/CommentSection/<comment_id>')
 def CommentSection(comment_id):
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+
     cursor.execute("select * from comment  where parent_id  = %s", [comment_id])
     comment_data = cursor.fetchall()
     cursor.close()
