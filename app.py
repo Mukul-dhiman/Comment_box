@@ -15,7 +15,7 @@ app=Flask(__name__)
 
 
 import yaml
-db = yaml.load(open('db.yaml'))
+db = yaml.load(open('db.yaml'),yaml.Loader)
 app.config['MYSQ_HOST'] = db['mysql_host']
 app.config['MYSQL_USER'] = db['mysql_user']
 app.config['MYSQL_PASSWORD'] = db['mysql_password']
