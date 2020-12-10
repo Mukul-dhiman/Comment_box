@@ -1,5 +1,10 @@
 # Comment_box
 
+## Setting you local mysql database
+
+Set your credentials in db.yaml and name of the database
+
+create a table using MYSQL.sql file
 
 
 ## Installation
