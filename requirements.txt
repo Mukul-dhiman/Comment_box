@@ -7,4 +7,4 @@ mysqlclient==1.4.6
 PyMySQL==0.9.3
 srsly==1.0.2
 symspellpy==6.5.2
-virtualenv==15.1.0
+pyspellchecker==0.5.4
