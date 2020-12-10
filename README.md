@@ -4,7 +4,7 @@
 
 ## Installation
 
-First, start by closing the repository:
+First, start by cloning the repository:
 
 ```
 git clone https://github.com/Mukul-dhiman/Comment_box.git
