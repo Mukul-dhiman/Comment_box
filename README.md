@@ -24,12 +24,12 @@ cd Comment_box
 
 - Create a virtual environment
 ```
-virtualenv venv
+virtualenv env
 ```
 
 - Enable the virtual environment
 ```
-source venv/bin/activate
+source env/bin/activate
 ```
 
 - Install the python dependencies on the virtual environment
