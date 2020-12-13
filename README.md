@@ -2,7 +2,7 @@
 
 # Link
 
-http://talkworld.pythonanywhere.com/CommentBox
+http://talkworld.pythonanywhere.com/EnterName
 
 ## Installation
 
