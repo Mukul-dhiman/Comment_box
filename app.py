@@ -93,6 +93,7 @@ def CommentSection(comment_id):
         conn.close()
         return render_template('CommentSection.html',comment_data = comment_data)
 
+
 @app.route('/search',methods=['POST'])
 def search():
     result = []
