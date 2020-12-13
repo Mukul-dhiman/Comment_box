@@ -1,8 +1,9 @@
 from flask import Flask,render_template,session, request ,redirect, url_for
-from flask_mysqldb import MySQL
-import MySQLdb
+import sqlite3
 
 import os
+
+import re
 
 # all important functions are in functions.py
 from packages.functions import *
@@ -13,14 +14,11 @@ from packages.search import Result
 # constructiong Flask object
 app=Flask(__name__)
 
+cur_dir = os.getcwd()
 
-import yaml
-db = yaml.load(open('db.yaml'))
-app.config['MYSQ_HOST'] = db['mysql_host']
-app.config['MYSQL_USER'] = db['mysql_user']
-app.config['MYSQL_PASSWORD'] = db['mysql_password']
-app.config['MYSQL_DB'] = db['mysql_db'] 
-mysql = MySQL(app)
+conn = sqlite3.connect('database.db')
+
+
 
 
 
@@ -52,46 +50,67 @@ def CommentBox():
         text = form['comment']
         file = request.files['fileToUpload']
         name = 'UnKnown'
-        
+
         if 'name' in session:
             name = session['name']
-        try:
-            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            parent_id = "super"
-            current_id = Generate_random_id(16)
+        # try:
+            with sqlite3.connect("database.db") as conn:
+                cursor = conn.cursor()
+                parent_id = "super"
+                current_id = Generate_random_id(16)
 
-            #store image in static/images
-            store_image(file,current_id)
+                #store image in static/images
+                store_image(file,current_id)
 
-        
-            current_time = current_time_string()
-            cursor.execute("insert into comment value(%s,%s,%s,%s,%s)",(current_id,parent_id,  name, text, current_time))
-            mysql.connection.commit()
-            cursor.close()
-        
-        except Exception as e:
-            return str(e)
+
+                current_time = current_time_string()
+
+                query = "insert into comment (comment_id ,parent_id,author,comments_text,comment_on) values('" + str(current_id) +"','" + str(parent_id) + "','" + str(name) + "','" + str(text) + "','" + str(current_time) + "')"
+                cursor.execute(query)
+                conn.commit()
+        # except:
+        #     conn.rollback()
+
+        # finally:
+        #     name = session['name']
+        #     return render_template('CommentBox.html',Name=name)
+            conn.close()
     name = session['name']
     return render_template('CommentBox.html',Name=name)
 
 @app.route('/CommentSection/<comment_id>')
 def CommentSection(comment_id):
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute("select * from comment  where parent_id  = %s", [comment_id])
-    comment_data = cursor.fetchall()
-    cursor.close()
-    return render_template('CommentSection.html',comment_data = comment_data)
+    try:
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.cursor()
+            query = "select * from comment  where parent_id  = '" +str(comment_id) + "'"
+            cursor.execute(query)
+            comment_data = cursor.fetchall()
+    except:
+            conn.rollback()
+
+    finally:
+        return render_template('CommentSection.html',comment_data = comment_data)
+        conn.close()
 
 @app.route('/search',methods=['POST'])
 def search():
+    result = []
     if(request.method=='POST'):
         form = request.form
         query=form['search']
         if query=='':
             return render_template('CommentBox.html')
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        result = Result(cursor,query)
-        cursor.close()
+        try:
+            with sqlite3.connect("database.db") as conn:
+                cursor = conn.cursor()
+                result = Result(cursor,query)
+        except:
+            conn.rollback()
+
+        finally:
+            return render_template('search_results.html',result = result)
+            conn.close()
     return render_template('search_results.html',result = result)
 
 @app.route('/CommentReply/<comment_id>', methods=['POST'])
@@ -111,15 +130,29 @@ def CommentReply(comment_id):
 
         parent_id = comment_id
         current_time = current_time_string()
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute("insert into comment value(%s,%s,%s,%s,%s)",(reply_current_id,parent_id,  name, text, current_time))
-        mysql.connection.commit()
-        cursor.close()
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute("select parent_id from comment  where comment_id  = %s", [comment_id])
-    grand_parent = cursor.fetchall()
-    cursor.close()
-    return CommentSection(grand_parent[0]['parent_id'])
+        try:
+            with sqlite3.connect("database.db") as conn:
+                cursor = conn.cursor()
+                query = "insert into comment (comment_id ,parent_id,author,comments_text,comment_on) values('"+str(reply_current_id)+"','"+str(parent_id)+"','"+str(name)+"','"+str(text)+"','"+str(current_time)+"')"
+                cursor.execute(query)
+                conn.commit()
+        except:
+            conn.rollback()
+
+        finally:
+            conn.close()
+    try:
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.cursor()
+            query = "select parent_id from comment  where comment_id  = '" + str(comment_id) +"'"
+            cursor.execute(query)
+            grand_parent = cursor.fetchall()
+    except:
+        conn.rollback()
+    finally:
+        conn.close()
+    print(grand_parent[0])
+    return CommentSection(grand_parent[0][1])
 
 
 

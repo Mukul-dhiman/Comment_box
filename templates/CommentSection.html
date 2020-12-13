@@ -8,38 +8,37 @@
 
 
 <div class="shadow-lg border border-dark bg-white">
-
     {% for data in comment_data %}
     <div class="rounded shadow-lg border border-dark bg-white d-flex flex-column bd-highlight mb-3 comments-tile">
         <div class="d-flew justify-content-around" style="margin-left: 10px;" >
             <span style="display: inline-block;">
-                {{ data.author }}
+                {{ data[2] }}
                 :
             </spam>
             <span style="display: inline-block;">
-                {{ data.comments_text }}
+                {{ data[3] }}
             </span>
             <span>
-                <img src="{{ url_for('static', filename='images/'+data.comment_id+'.jpg') }}" alt="">
+                <img src="{{ url_for('static', filename='images/'+data[0]+'.jpg') }}" alt="">
             </span>
         </div>
         <div class="d-block p-2 " style="width:100%;">
             <button type="button" class="collapsible green_bar float" >Replies</button>
             <div class="content" >
-                <iframe src="/CommentSection/{{ data.comment_id }}"  style="min-height: 350px; margin: 20px; width:100%;" title="Iframe Example"></iframe>     
+                <iframe src="/CommentSection/{{ data[0] }}"  style="min-height: 350px; margin: 20px; width:100%;" title="Iframe Example"></iframe>
                 <div>
-                    <form method='POST' action='/CommentReply/{{ data.comment_id }}' enctype="multipart/form-data">
+                    <form method='POST' action='/CommentReply/{{ data[0] }}' enctype="multipart/form-data">
                         <textarea class="form-control" type='text' name='comment' placeholder="Give a reply to this comment" aria-label="write a new comment here"></textarea>
                         <input class='float' type="file" name='fileToUpload' id="fileToUpload">
                         <a class='float'><input type='submit' value="submit"></a>
                     </form>
                 </div>
             </div>
-            
+
         </div>
         <span class="d-flex flex-row-reverse bd-highlight" style="margin-right: 30px;">
             <small>
-                {{ data.comment_on }}
+                {{ data[4] }}
             </small>
         </span>
     </div>

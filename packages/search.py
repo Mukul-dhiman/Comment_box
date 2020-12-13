@@ -1,6 +1,6 @@
 from .spell_correct import similar
 
-def Result(cursor,query):
+def Result(cursor,query,db):
     query = query.strip().split(" ")
     result = ()
     temp=()
@@ -10,7 +10,8 @@ def Result(cursor,query):
     similar_word=list(set(similar_word))
     unique_comments=[]
     for w in similar_word:
-        cursor.execute("select * from comment where comments_text regexp '(^|[[:space:]])"+str(w)+"([[:space:]]|$)'")
+        query = "select * from comment where comments_text like '%"+str(w)+"%'"
+        cursor.execute(query)
         word_result = cursor.fetchall()
         print(word_result)
         for t in word_result:
