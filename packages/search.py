@@ -1,9 +1,9 @@
 from .spell_correct import similar
 
-def Result(cursor,query,db):
+def Result(cursor,query):
     query = query.strip().split(" ")
-    result = ()
-    temp=()
+    result = []
+    temp=[]
     similar_word = []
     for word in query:
         similar_word.extend(similar(word))
@@ -13,13 +13,14 @@ def Result(cursor,query,db):
         query = "select * from comment where comments_text like '%"+str(w)+"%'"
         cursor.execute(query)
         word_result = cursor.fetchall()
-        print(word_result)
         for t in word_result:
-            if t['comment_id'] not in unique_comments:
-                unique_comments.append(t['comment_id'])
+            if t[0] not in unique_comments:
+                unique_comments.append(t[0])
                 temp=list(temp)
                 temp.clear()
                 temp.append(t)
-                result = result + tuple(temp)
+                result.append(t)
+
+    print(temp)
     return result
 

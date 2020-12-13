@@ -3,7 +3,7 @@ import sqlite3
 
 import os
 
-import re
+
 
 # all important functions are in functions.py
 from packages.functions import *
@@ -53,7 +53,7 @@ def CommentBox():
 
         if 'name' in session:
             name = session['name']
-        # try:
+        try:
             with sqlite3.connect("database.db") as conn:
                 cursor = conn.cursor()
                 parent_id = "super"
@@ -68,12 +68,12 @@ def CommentBox():
                 query = "insert into comment (comment_id ,parent_id,author,comments_text,comment_on) values('" + str(current_id) +"','" + str(parent_id) + "','" + str(name) + "','" + str(text) + "','" + str(current_time) + "')"
                 cursor.execute(query)
                 conn.commit()
-        # except:
-        #     conn.rollback()
+        except:
+            conn.rollback()
 
-        # finally:
-        #     name = session['name']
-        #     return render_template('CommentBox.html',Name=name)
+        finally:
+            name = session['name']
+            return render_template('CommentBox.html',Name=name)
             conn.close()
     name = session['name']
     return render_template('CommentBox.html',Name=name)
@@ -90,8 +90,8 @@ def CommentSection(comment_id):
             conn.rollback()
 
     finally:
-        return render_template('CommentSection.html',comment_data = comment_data)
         conn.close()
+        return render_template('CommentSection.html',comment_data = comment_data)
 
 @app.route('/search',methods=['POST'])
 def search():
@@ -109,9 +109,10 @@ def search():
             conn.rollback()
 
         finally:
-            return render_template('search_results.html',result = result)
             conn.close()
-    return render_template('search_results.html',result = result)
+            print("yes")
+            return render_template('search_results.html',result = result)
+    
 
 @app.route('/CommentReply/<comment_id>', methods=['POST'])
 def CommentReply(comment_id):
@@ -151,8 +152,7 @@ def CommentReply(comment_id):
         conn.rollback()
     finally:
         conn.close()
-    print(grand_parent[0])
-    return CommentSection(grand_parent[0][1])
+    return CommentSection(grand_parent[0][0])
 
 
 
